@@ -10,11 +10,11 @@
 - Edit the attributes of UI elements in a storyboard using the Attributes inspector
 (어트리뷰트 인스펙터를 사용하여 스토리보드에서 UI 요소의 속성 편집) ✅
 - View and rearrange UI elements using the outline view
-(아웃라인 뷰를 사용하여 UI 요소보기 및 재정렬)
+(아웃라인 뷰를 사용하여 UI 요소보기 및 재정렬)  ✅
 - Preview a storyboard UI using Assistant editor’s Preview mode
-(어시스턴트 에디터의 프리뷰 모드를 사용하여 스토리보드 UI 미리보기)
+(어시스턴트 에디터의 프리뷰 모드를 사용하여 스토리보드 UI 미리보기)  ✅
 - Use Auto Layout to lay out a UI that automatically adapts to the user’s device size
-(자동 레이아웃을 사용하여 사용자의 디바이스 크기에 자동으로 적응하는 UI 배치하기)
+(자동 레이아웃을 사용하여 사용자의 디바이스 크기에 자동으로 적응하는 UI 배치하기)  ✅
 
 ### Comments
 
@@ -33,5 +33,7 @@
 - 어트리뷰트 인스펙터에서 Return Key를 Done으로 바꿈 -> 이렇게 하면 키보드의 기본 Return키가 Done 키로 변경됨
 - Auto-enabled return key 체크 -> 사용자는 텍스트 필드에 텍스트를 입력하기 전에 완료 키를 누를 수 없음 (빈 문자열 입력 불가)
 
+### Auto Layout
+- 가장 쉬운 방법중 하나는 UIStackView를 사용하는 것이다.
 
 
