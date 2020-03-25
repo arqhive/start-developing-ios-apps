@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="t1C-wp-BN9">
-                                <rect key="frame" x="20" y="20" width="335" height="100.5"/>
+                                <rect key="frame" x="20" y="20" width="335" height="428.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meal Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ok8-ka-NYS">
                                         <rect key="frame" x="0.0" y="0.0" width="86.5" height="20.5"/>
@@ -36,23 +36,26 @@
                                             <action selector="setDefaultLabelText:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qQM-Zd-xfs"/>
                                         </connections>
                                     </button>
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="YmN-qb-Fft">
+                                        <rect key="frame" x="0.0" y="108.5" width="320" height="320"/>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="YmN-qb-Fft" secondAttribute="height" multiplier="1:1" id="7d8-11-FUd"/>
+                                        </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="gzt-DC-KHH" appends="YES" id="a2e-oK-HyS"/>
+                                        </connections>
+                                    </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="4BS-91-Bee" secondAttribute="trailing" id="Tps-Rj-tVn"/>
                                 </constraints>
                             </stackView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="AQa-ta-hf2">
-                                <rect key="frame" x="27" y="128.5" width="320" height="320"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="AQa-ta-hf2" secondAttribute="height" multiplier="1:1" id="rqF-Dl-uaf"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="t1C-wp-BN9" secondAttribute="trailing" constant="20" id="CDt-yy-NIY"/>
                             <constraint firstItem="t1C-wp-BN9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Hde-JZ-KhP"/>
-                            <constraint firstItem="AQa-ta-hf2" firstAttribute="top" secondItem="t1C-wp-BN9" secondAttribute="bottom" constant="8" id="PBR-vp-6DF"/>
                             <constraint firstItem="t1C-wp-BN9" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="nwT-Vy-Wly"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -60,10 +63,15 @@
                     <connections>
                         <outlet property="mealNameLabel" destination="ok8-ka-NYS" id="4Ak-mw-k0c"/>
                         <outlet property="nameTextField" destination="4BS-91-Bee" id="iho-yL-HkP"/>
-                        <outlet property="photoImageView" destination="AQa-ta-hf2" id="Qvw-Mh-wGL"/>
+                        <outlet property="photoImageView" destination="YmN-qb-Fft" id="iIo-Nh-M3A"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="gzt-DC-KHH">
+                    <connections>
+                        <action selector="selectImageFromPhotoLibrary:" destination="BYZ-38-t0r" id="V5F-AP-UzS"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="138.40000000000001" y="127.28635682158921"/>
         </scene>
