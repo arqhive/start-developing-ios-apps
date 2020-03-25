@@ -11,6 +11,9 @@
 // 이 작업을 수행하면 뷰 컨트롤러 파일에 객체의 프로퍼티가 만들어지므로 런타임시 코드에서 해당 객체에 액세스 하고 조작 할 수 있다.
 import UIKit
 
+// 뷰 컨트롤러가 뷰와 데이터 모델간의 통신 파이프 라인 역할하는 스타일의 앱 디자인을 MVC 패턴이라고 한다.
+// 이 패턴에서 모델은 앱의 데이터를 추적하고, 뷰는 사용자 인터페이스를 표시하고 구성하며 컨트롤러는 뷰를 핸들링 한다.
+// 사용자의 조치에 응답하고 데이터 모델의 컨텐츠로 뷰를 채우면 컨트롤러는 모델과 뷰간의 통신을 위한 게이트웨이 역할을 한다.
 class ViewController: UIViewController, UITextFieldDelegate {
 
     //MARK: Properties
@@ -28,6 +31,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     // 처음 초기화된 이후로는 항상 값을 갖고 있다는 것이 보장된다.
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var mealNameLabel: UILabel!
+    @IBOutlet weak var photoImageView: UIImageView!
     
     // 인터페이스 객체에서 값에 액세스하거나 코드에서 인터페이스 객체를 수정하려는 경우
     // 인터페이스 객체에 대한 Outlet만 있으면 된다.
@@ -35,6 +39,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     // 아울렛을 사용하면 코드에서 인터페이스 요소를 참조 할 수 있지만
     // 사용자가 요소와 상호 작용 할 때마다 응답 할 방법이 필요하다.
     
+    // 뷰 컨트롤러의 컨첸츠뷰가 스토리보드에서 만들어져 로드 될 때 호출된다.
+    // 일반적으로 viewDidLoad()는 한번만 호출된다. (컨텐츠 뷰가 생설될때)
     // 스토리보드에서 뷰 컨트롤러를 로드하면 시스템이 뷰 계층을 인스턴스화 하고
     // 모든 뷰 컨트롤러의 Outlet에 적절한 값을 할당 한다.
     // viewDidLoad()가 호출 될 때까지 시스템은 모든 컨트롤러의 Outlet에 유효한 값을 할당한다.

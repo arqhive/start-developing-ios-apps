@@ -41,11 +41,18 @@
                                     <constraint firstAttribute="trailing" secondItem="4BS-91-Bee" secondAttribute="trailing" id="Tps-Rj-tVn"/>
                                 </constraints>
                             </stackView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="AQa-ta-hf2">
+                                <rect key="frame" x="27" y="128.5" width="320" height="320"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="AQa-ta-hf2" secondAttribute="height" multiplier="1:1" id="rqF-Dl-uaf"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="t1C-wp-BN9" secondAttribute="trailing" constant="20" id="CDt-yy-NIY"/>
                             <constraint firstItem="t1C-wp-BN9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Hde-JZ-KhP"/>
+                            <constraint firstItem="AQa-ta-hf2" firstAttribute="top" secondItem="t1C-wp-BN9" secondAttribute="bottom" constant="8" id="PBR-vp-6DF"/>
                             <constraint firstItem="t1C-wp-BN9" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="nwT-Vy-Wly"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -53,6 +60,7 @@
                     <connections>
                         <outlet property="mealNameLabel" destination="ok8-ka-NYS" id="4Ak-mw-k0c"/>
                         <outlet property="nameTextField" destination="4BS-91-Bee" id="iho-yL-HkP"/>
+                        <outlet property="photoImageView" destination="AQa-ta-hf2" id="Qvw-Mh-wGL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -60,4 +68,7 @@
             <point key="canvasLocation" x="138.40000000000001" y="127.28635682158921"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="defaultPhoto" width="320" height="320"/>
+    </resources>
 </document>
