@@ -62,10 +62,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerContro
     // 행동은 setDefaultLabelText(_)
     // 대상은 ViewController (액션이 정의된 위치)
     // sender는 Button이다.
-    @IBAction func setDefaultLabelText(_ sender: UIButton) {
-        // 레이블의 text 속성을 Default Text로 설정
-        mealNameLabel.text = "Default Text"
-    }
+//    @IBAction func setDefaultLabelText(_ sender: UIButton) {
+//        // 레이블의 text 속성을 Default Text로 설정
+//        mealNameLabel.text = "Default Text"
+//    }
     
     // 사용자가 이미지를 누르면 사진 라이브러리에서 사진을 선택하거나 자신의 사진을 찍을 수 있어야 한다.
     // 이는 UIImagePickerController 클래스에 동작이 내장되어 있다.
