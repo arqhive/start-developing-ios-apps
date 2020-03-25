@@ -5,7 +5,11 @@ import UIKit
 @IBDesignable class RatingControl: UIStackView {
     //MARK: Properties
     private var ratingButtons = [UIButton]() // 여러개의 버튼을 만들어야함
-    var rating = 0 // 평점
+    var rating = 0 {
+        didSet {
+            updateButtonSelectionStates() // 값이 변할때마다 버튼 상태를 바꿈
+        }
+    }
     
     // 인스펙터블 프로퍼티 (버튼의 크기가 버튼 수)
     // InterfaceBuilder에서 변경할때 관찰하고 응답하기 위해 관찰자 추가
@@ -32,6 +36,13 @@ import UIKit
         }
         ratingButtons.removeAll() // 배열 아이템 제거
         
+        // 버튼 이미지 불러오기
+        // 앱의 기본 번들 호출
+        let bundle = Bundle(for: type(of: self))
+        let filledStar = UIImage(named: "filledStar", in: bundle, compatibleWith: self.traitCollection)
+        let emptyStar = UIImage(named: "emptyStar", in: bundle, compatibleWith: self.traitCollection)
+        let highlightedStar = UIImage(named: "highlightedStar", in: bundle, compatibleWith: self.traitCollection)
+        
         // UIButton 클래스의 컨비니언스 초기화중 하나를 사용함.
         // 이 초기화는 크기가 0인 사각형을 호출하여 전달한다.
         // 자동레이아웃을 사용하고 있기 때문에 0인 버튼으로 시작하는 것이 좋다.
@@ -39,7 +50,11 @@ import UIKit
         // 5개의 버튼을 만들어야 하므로 반복문을 사용한다.
         for _ in 0..<startCount { // 루프의 반복을 알필요가 없어서 _ 를 사용한다.
             let button = UIButton()
-            button.backgroundColor = UIColor.blue
+            // 버튼에는 일반, 강조표시, 포커스, 선택, 비활성화 총 5가지의 상태가 있다.
+            button.setImage(emptyStar, for: .normal)
+            button.setImage(filledStar, for: .selected)
+            button.setImage(highlightedStar, for: .highlighted)
+            button.setImage(highlightedStar, for: [.highlighted, .selected])
             
             // constraints 추가
             // 스택뷰가 자동으로 false로 설정하지만 오토레이아웃을 사용하는 경우 명시적으로 비활성화 하는것이 좋다. (실수 방지)
@@ -59,6 +74,9 @@ import UIKit
             // 배열에 추가
             ratingButtons.append(button)
         }
+        
+        // 버튼을 컨트롤에 추가 할때마다 상태 업데이트
+        updateButtonSelectionStates()
     }
     
     // MARK: Initialization
@@ -82,6 +100,25 @@ import UIKit
     
     //MARK: Button Action
     @objc func ratingButtonTapped(button: UIButton) {
-        print("Button Pressed 👍")
+        guard let index = ratingButtons.firstIndex(of: button) else {
+            fatalError("\(button)이, ratingButtons 배열 안에 없습니다:\(ratingButtons)")
+        }
+        
+        // 선택된 버튼의 평점 계산
+        let selectedRating = index + 1
+        
+        if selectedRating == rating {
+            rating = 0 // 같은 점수면 초기화
+        } else {
+            rating = selectedRating
+        }
+    }
+    
+    // rating이 설정되면 버튼 모양을 업데이트 할 메서드
+    private func updateButtonSelectionStates() {
+        for (index, button) in ratingButtons.enumerated() {
+            // 버튼의 인덱스가 rating보다 작으면 버튼을 선택해야 함
+            button.isSelected = index < rating
+        }
     }
 }
