@@ -2,19 +2,21 @@
 
 ##  Goal
 - Xcode 에서 프로젝트 생성 ✅
-- Identify the purpose of key files that are created with an Xcode project template
-(Xcode 프로젝트 템플릿으로 생성된 주요 파일의 목적 구분) ✅
-- Open and switch between files in a project (프로젝트에서 파일 열기 및 전환) ✅
-- Run an app in iOS Simulator (iOS 시뮬레이터에서 앱 실행) ✅
-- Add, move, and resize UI elements in a storyboard (스토리보드에서 UI 요소 추가, 이동 및 크기 조정) ✅
-- Edit the attributes of UI elements in a storyboard using the Attributes inspector
-(어트리뷰트 인스펙터를 사용하여 스토리보드에서 UI 요소의 속성 편집) ✅
-- View and rearrange UI elements using the outline view
-(아웃라인 뷰를 사용하여 UI 요소보기 및 재정렬)  ✅
-- Preview a storyboard UI using Assistant editor’s Preview mode
-(어시스턴트 에디터의 프리뷰 모드를 사용하여 스토리보드 UI 미리보기)  ✅
-- Use Auto Layout to lay out a UI that automatically adapts to the user’s device size
-(자동 레이아웃을 사용하여 사용자의 디바이스 크기에 자동으로 적응하는 UI 배치하기)  ✅
+- Xcode 프로젝트 템플릿으로 생성된 주요 파일의 목적 구분 ✅
+- 프로젝트에서 파일 열기 및 전환 ✅
+- iOS 시뮬레이터에서 앱 실행  ✅
+- 스토리보드에서 UI 요소 추가, 이동 및 크기 조정 ✅
+- 어트리뷰트 인스펙터를 사용하여 스토리보드에서 UI 요소의 속성 편집  ✅
+- 아웃라인 뷰를 사용하여 UI 요소보기 및 재정렬  ✅
+- 어시스턴트 에디터의 프리뷰 모드를 사용하여 스토리보드 UI 미리보기  ✅
+- 자동 레이아웃을 사용하여 사용자의 디바이스 크기에 자동으로 적응하는 UI 배치하기 ✅
+- 스토리보드의 씬과 기본 뷰 컨트롤러간의 관계를 설명
+- 스토리보드와 소스코드의 UI 요소간의 아울렛 및 액션 연결 만들기
+- 텍스트 필드에서 사용자 입력을 처리하고 결과를 UIdp vytl
+- 클래스가 프로토콜을 따르게 하기
+- 델리게이션 패턴 이해
+- 앱 아키텍쳐를 디자인 할때 타겟-액션 패턴을 따르기
+
 
 ### Comments
 
@@ -36,4 +38,12 @@
 ### Auto Layout
 - 가장 쉬운 방법중 하나는 UIStackView를 사용하는 것이다.
 
+### Storyboard
+- 스토리 보드에서 씬은 하나의 컨텐츠 화면과 일반적으로 하나의 뷰 컨트롤러를 나타낸다.
+- 뷰 컨트롤러는 앱의 액션을 구현한다.
+- 뷰 컨트롤러는 하위 뷰 계층 구조로 단일 컨텐츠 뷰를 관리한다.
+- 뷰 컨트롤러는 앱의 데이터를 캡슐화 하는 앱의 데이터 모델과 해당 데이터를 표시하는 뷰, 컨텐츠 뷰의 수명주기 관리, 기기 회전시 방향 변경 처리, 내비게이션 정의 등의 정보 흐름을 조정한다.
+- 씬을 추가할때 Identity inspector에서 직접 연결해야 한다.
+- 앱에서 인터랙션을 정의하려면 뷰 컨트롤러의 소스 코드가 스토리 보드의 뷰와 통신 할 수 있어야 한다.
+- 스토리보드의 뷰와 뷰 컨트롤러 소스코드 파일 사이에 추가 연결(아울렛과 액션)을 정의하면 된다.
 
