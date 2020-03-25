@@ -48,8 +48,9 @@ import UIKit
         // 자동레이아웃을 사용하고 있기 때문에 0인 버튼으로 시작하는 것이 좋다.
         // 스택뷰는 버튼의 유ㅣ치를 자동으로 정의하고 버튼의 크기를 정의하는 constaraintes 조건을 추가한다.
         // 5개의 버튼을 만들어야 하므로 반복문을 사용한다.
-        for _ in 0..<startCount { // 루프의 반복을 알필요가 없어서 _ 를 사용한다.
+        for index in 0..<startCount { // 루프의 반복을 알필요가 없어서 _ 를 사용한다.
             let button = UIButton()
+            
             // 버튼에는 일반, 강조표시, 포커스, 선택, 비활성화 총 5가지의 상태가 있다.
             button.setImage(emptyStar, for: .normal)
             button.setImage(filledStar, for: .selected)
@@ -61,6 +62,9 @@ import UIKit
             button.translatesAutoresizingMaskIntoConstraints = false // 기본 값은 true 오토레이아웃을 사용하는 경우 자동생성조건을 자신의 것으로 바꿈
             button.heightAnchor.constraint(equalToConstant: startSize.height).isActive = true
             button.widthAnchor.constraint(equalToConstant: startSize.width).isActive = true
+            
+            // 접근성 라벨 추가
+            button.accessibilityLabel = "\(index+1) 별점으로 세팅되어 있습니다."
             
             // 버튼에 액션 추가
             // target-action 패턴을 사용
@@ -119,6 +123,25 @@ import UIKit
         for (index, button) in ratingButtons.enumerated() {
             // 버튼의 인덱스가 rating보다 작으면 버튼을 선택해야 함
             button.isSelected = index < rating
+            
+            let hintString: String?
+            if rating == index + 1 {
+                hintString = "평점을 0점으로 리셋했습니다."
+            } else {
+                hintString = nil
+            }
+            
+            let valueString: String
+            switch (rating) {
+            case 0:
+                valueString = "평점이 설정되어 있지 않습니다."
+            case 1:
+                valueString = "1점이 설정되었습니다."
+            default:
+                valueString = "\(rating)점이 설정되었습니다."
+            }
+            button.accessibilityHint = hintString
+            button.accessibilityValue = valueString
         }
     }
 }

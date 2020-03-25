@@ -32,6 +32,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerContro
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var mealNameLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
+    // 참조를 설정한다.
+    @IBOutlet weak var ratingControl: RatingControl!
     
     // 인터페이스 객체에서 값에 액세스하거나 코드에서 인터페이스 객체를 수정하려는 경우
     // 인터페이스 객체에 대한 Outlet만 있으면 된다.
