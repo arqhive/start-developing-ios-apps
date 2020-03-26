@@ -55,6 +55,7 @@
 - 객체 라이브러리 열기 Cmd + Shift + L 또는 우측 상단 `+`버튼 또는 메뉴 View -> Show Library
 - 새로운 파일 생성 Command + N
 - prettier Control + I
+- 장면 이동을 segue라고 한다.
 
 ### 직접 추가한 사용자 인터페이스 요소가 View에 중첩되어있는 이유
 - View는 화면에 표시되고 사용자 입력에 반응 할 뿐만 아니라 다른 뷰의 컨테이너 역할을 할 수 있다.
