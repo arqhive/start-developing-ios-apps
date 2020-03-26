@@ -18,7 +18,7 @@ import os.log
 // 이 패턴에서 모델은 앱의 데이터를 추적하고, 뷰는 사용자 인터페이스를 표시하고 구성하며 컨트롤러는 뷰를 핸들링 한다.
 // 사용자의 조치에 응답하고 데이터 모델의 컨텐츠로 뷰를 채우면 컨트롤러는 모델과 뷰간의 통신을 위한 게이트웨이 역할을 한다.
 class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+    
     //MARK: Properties
     // IBOutlet 속성은 Interface Builder에서 nameTextField 프로퍼티에 연결 할 수 있음을 알려준다.
     
@@ -58,6 +58,14 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         // 델리게이트 콜백을 통해 텍스트 필드의 사용자 입력을 처리한다.
         nameTextField.delegate = self
         
+        // meal이 있으면 (수정상태라면)
+        if let meal = meal {
+            navigationItem.title = meal.name
+            nameTextField.text   = meal.name
+            photoImageView.image = meal.photo
+            ratingControl.rating = meal.rating
+        }
+        
         // 버튼 상태를 핸들링하는 조건 추가
         updateSaveButtonState()
     }
@@ -83,7 +91,18 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     
     // Cancel 버튼
     @IBAction func cancel(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
+        // 뷰 컨트롤러가 모달이나 푸시 스타일이라면
+        let isPresentingInAddMealMode = presentingViewController is UINavigationController
+        
+        if isPresentingInAddMealMode {
+            dismiss(animated: true, completion: nil)
+        } else if let owningNavigationController = navigationController {
+            owningNavigationController.popViewController(animated: true)
+        } else {
+            fatalError("페이탈 에러!")
+        }
+        
+        
     }
     
     // 액션은 앱에서 발생할 수 있는 이벤트에 연결되어있는 코드의 조각이다.
@@ -111,16 +130,16 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         let imagePickerController = UIImagePickerController()
         // 사진 선택만 가능하다.
         imagePickerController.sourceType = .photoLibrary // 열거형의 값이 이미 알려진 경우 언제든지 약식으로 쓸 수 있다.
-
+        
         // ViewController를 이미지픽커의 델리게이터로 만든다.
         imagePickerController.delegate = self
-
+        
         // ViewController에서 호출되는 메서드 이다. 암시적인 자체 객체에서 실행된다.
         // imagePickerController에 의해 정의된 뷰 컨트롤러를 표시하도록 요청한다.
         // completion은 완료 핸드러를 나타내는데 여기서는 실행할 필요가 없으므로 nil로 설정한다.
         present(imagePickerController, animated: true, completion: nil)
     }
-
+    
     // 텍스트필드에서 사용자 입력을 받아 들일 때 텍스트 필트 델리게이터의 도움이 필요하다.
     // 델리게이터는 대신 작용하고 따른 객체와의 통신을 가능하게하는 객체다.
     // 델리게이트 객채(이 경우 텍스트필드)는 다른 객체(델리게이터)에 대한 참조를 유지하며
@@ -180,7 +199,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         // 픽커를 숨긴다.
         dismiss(animated: true, completion: nil)
     }
-  
+    
     //MARK: Private Methods
     private func updateSaveButtonState() {
         // 텍스트필드가 비어있으면 세이브 버튼 비활성화

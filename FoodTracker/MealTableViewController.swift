@@ -1,12 +1,5 @@
-//
-//  MealTableViewController.swift
-//  FoodTracker
-//
-//  Created by user on 25/03/2020.
-//  Copyright © 2020 arqhive. All rights reserved.
-//
-
 import UIKit
+import os.log
 
 // 동적데이터를 표시하려면 테이블뷰에 데이터 소스와 델리게이터라는 두 가지 중요한 헬퍼가 필요하다.
 // 데이터 소스는 테이블 뷰에 표시해야하는 데이터를 제공한다.
@@ -15,28 +8,31 @@ class MealTableViewController: UITableViewController {
     
     //MARK: Properties
     var meals = [Meal]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 내비게이션 왼쪽에 Edit버튼 추가
+        navigationItem.leftBarButtonItem = editButtonItem
         
         // 샘플 데이터 불러오기
         loadSampleMeals()
     }
-
+    
     // MARK: - Table view data source
-
+    
     // 테이블뷰에 표시할 섹션 수
     // 단일 섹션만 필요하므로 1
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1 // 1개의 섹션을 반환한다.
     }
-
+    
     // 현재 테이블뷰 에는 단일 섹션만 있고 각 Meal객체에는 고유한 행이 있어야 한다.
     // 즉, 행 수는 배열의 Meal 객체수여야 한다.
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return meals.count
     }
-
+    
     // 지정된 행에 표시 할 셀을 구성하고 제공한다.
     // 각 행에는 하나의 셀이 있으며, 해당 셀은 해당 행에 나타나는 내용과 해당 내용이 배치되는 방법을 결정한다.
     // 이 메소드는 테이블의 각 행에 대해 호출된다.
@@ -62,66 +58,99 @@ class MealTableViewController: UITableViewController {
         cell.nameLabel.text = meal.name
         cell.photoImageview.image = meal.photo
         cell.ratingControl.rating = meal.rating
-
+        
         return cell
     }
-
-    /*
+    
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
-
-    /*
-    // Override to support editing the table view.
+     
+    
+    
+    // 해당 델리게이트 메서드는 편집 모드일때 테이블행의 변경 내용을 관리한다.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            meals.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
-    */
-
+    
+    
     /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
+     // Override to support rearranging the table view.
+     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+     
+     }
+     */
+    
     /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
+     // Override to support conditional rearranging of the table view.
+     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+     // Return false if you do not want the item to be re-orderable.
+     return true
+     }
+     */
+    
+    
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
+        super.prepare(for: segue, sender: sender)
+        
+        // segue식별자를 판별하여 적합한 행동을 구현
+        switch(segue.identifier ?? "") {
+            
+        case "AddItem":
+            os_log("Adding a new meal.", log: OSLog.default, type: .debug)
+            
+        case "ShowDetail":
+            guard let mealDetailViewController = segue.destination as? MealViewController else {
+                fatalError("Unexpected destination: \(segue.destination)")
+            }
+            
+            guard let selectedMealCell = sender as? MealTableViewCell else {
+                fatalError("Unexpected sender: \(String(describing: sender))")
+            }
+            
+            guard let indexPath = tableView.indexPath(for: selectedMealCell) else {
+                fatalError("The selected cell is not being displayed by the table")
+            }
+            
+            let selectedMeal = meals[indexPath.row]
+            mealDetailViewController.meal = selectedMeal
+            
+        default:
+            fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
+        }
     }
-    */
+    
     
     //MARK: Actions
     // 화면이 되감기 되는 동작을 추가한다.
     // Save 버튼을 눌렀을때
     @IBAction func unwindToMealList(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? MealViewController, let meal = sourceViewController.meal {
-            let newIndexPath = IndexPath(row: meals.count, section: 0)
-            meals.append(meal)
-            tableView.insertRows(at: [newIndexPath], with: .automatic)
+            if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                // 업데이트
+                meals[selectedIndexPath.row] = meal
+                tableView.reloadRows(at: [selectedIndexPath], with: .none)
+            } else {
+                let newIndexPath = IndexPath(row: meals.count, section: 0)
+                meals.append(meal)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            }
+            
         }
     }
-
+    
     //MARK: Private Method
     
     private func loadSampleMeals() {
