@@ -38,6 +38,12 @@
 - 테이블뷰 델리게이트 및 데이터소스의 역할 이해 ✅
 - 배열을 사용하여 데이터 저장 및 작업 ✅
 - 테이블 뷰에 동적 데이터 표시 ✅
+- 스토리보드의 내비게이션 컨트롤러 내에 기존 뷰 컨트롤러 내장
+- Create segues between view controllers
+- Attrubute inspector를 사용하여 스토리보드에서 segue속성 편집
+- prepare()를 사용하여 뷰 컨트롤러간에 데이터 전달
+- Perform an unwind segue
+- 스택뷰를 사용하여 유연한 레이아웃 만들기
 
 
 ### Comments
