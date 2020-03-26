@@ -14,7 +14,7 @@ import UIKit
 // 뷰 컨트롤러가 뷰와 데이터 모델간의 통신 파이프 라인 역할하는 스타일의 앱 디자인을 MVC 패턴이라고 한다.
 // 이 패턴에서 모델은 앱의 데이터를 추적하고, 뷰는 사용자 인터페이스를 표시하고 구성하며 컨트롤러는 뷰를 핸들링 한다.
 // 사용자의 조치에 응답하고 데이터 모델의 컨텐츠로 뷰를 채우면 컨트롤러는 모델과 뷰간의 통신을 위한 게이트웨이 역할을 한다.
-class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     //MARK: Properties
     // IBOutlet 속성은 Interface Builder에서 nameTextField 프로퍼티에 연결 할 수 있음을 알려준다.
@@ -30,7 +30,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerContro
     // 항상 값을 갖는 옵셔널 이라는 뜻이고 언래핑 할때 nil 체크를 하지 않는다.
     // 처음 초기화된 이후로는 항상 값을 갖고 있다는 것이 보장된다.
     @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var mealNameLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
     // 참조를 설정한다.
     @IBOutlet weak var ratingControl: RatingControl!
@@ -120,7 +119,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerContro
     // 위 함수에서 텍스트필드가 첫 번재 응답자 상태를 사임한후 호출된다.
     // 텍스트 필드에 입력한 정보를 읽고 무언가 실행 할 수 있다.
     func textFieldDidEndEditing(_ textField: UITextField) {
-        mealNameLabel.text = textField.text
+        // mealNameLabel.text = textField.text
     }
     
     //MARK: UIImagePickerControllerDelegate
