@@ -110,8 +110,19 @@ class MealTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    //MARK: Actions
+    // 화면이 되감기 되는 동작을 추가한다.
+    // Save 버튼을 눌렀을때
+    @IBAction func unwindToMealList(sender: UIStoryboardSegue) {
+        if let sourceViewController = sender.source as? MealViewController, let meal = sourceViewController.meal {
+            let newIndexPath = IndexPath(row: meals.count, section: 0)
+            meals.append(meal)
+            tableView.insertRows(at: [newIndexPath], with: .automatic)
+        }
+    }
 
-     //MARK: Private Method
+    //MARK: Private Method
     
     private func loadSampleMeals() {
         // 이미지를 로드 한다.

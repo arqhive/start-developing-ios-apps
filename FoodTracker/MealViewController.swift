@@ -11,6 +11,9 @@
 // 이 작업을 수행하면 뷰 컨트롤러 파일에 객체의 프로퍼티가 만들어지므로 런타임시 코드에서 해당 객체에 액세스 하고 조작 할 수 있다.
 import UIKit
 
+// 통합 로깅 시스템
+import os.log
+
 // 뷰 컨트롤러가 뷰와 데이터 모델간의 통신 파이프 라인 역할하는 스타일의 앱 디자인을 MVC 패턴이라고 한다.
 // 이 패턴에서 모델은 앱의 데이터를 추적하고, 뷰는 사용자 인터페이스를 표시하고 구성하며 컨트롤러는 뷰를 핸들링 한다.
 // 사용자의 조치에 응답하고 데이터 모델의 컨텐츠로 뷰를 채우면 컨트롤러는 모델과 뷰간의 통신을 위한 게이트웨이 역할을 한다.
@@ -33,6 +36,10 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     @IBOutlet weak var photoImageView: UIImageView!
     // 참조를 설정한다.
     @IBOutlet weak var ratingControl: RatingControl!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    
+    
+    var meal: Meal? // 언제든 nil이 가능 할 수 있다.
     
     // 인터페이스 객체에서 값에 액세스하거나 코드에서 인터페이스 객체를 수정하려는 경우
     // 인터페이스 객체에 대한 Outlet만 있으면 된다.
@@ -50,8 +57,35 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         // self는 ViewController 클래스 정의의 범위내에서 참조되므로 ViewController 클래스를 참조한다.
         // 델리게이트 콜백을 통해 텍스트 필드의 사용자 입력을 처리한다.
         nameTextField.delegate = self
+        
+        // 버튼 상태를 핸들링하는 조건 추가
+        updateSaveButtonState()
     }
-
+    
+    //MARK: Navigation
+    // 이 방법을 사용하면 이전 뷰 컨트롤러를 구성 할 수 있다.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        // Save버튼을 누를때만 대상 뷰 컨트롤러를 구성
+        // sender가 버튼인지 확인하고 ID연산자를 이용하여 sender및 saveButton 아울렛에서 참조하는 객체가 동일한지 확인한다.
+        guard let button = sender as? UIBarButtonItem, button === saveButton else {
+            os_log("The save button was not pressed, cancelling", log: OSLog.default, type: .debug)
+            return
+        }
+        
+        let name = nameTextField.text ?? "" // 값이 있으면 반환하고 그렇지 않으면 ""
+        let photo = photoImageView.image
+        let rating = ratingControl.rating
+        
+        // segue가 실행되기 전에 적절한 값으로 속성을 구성한다.
+        meal = Meal(name: name, photo: photo, rating: rating)
+    }
+    
+    // Cancel 버튼
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     // 액션은 앱에서 발생할 수 있는 이벤트에 연결되어있는 코드의 조각이다.
     //MARK: Actions
     // sender 파라미터는 액션 트리거링을 담당하는 오브젝트를 나타낸다 (해당 경우 버튼)
@@ -120,6 +154,9 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     // 텍스트 필드에 입력한 정보를 읽고 무언가 실행 할 수 있다.
     func textFieldDidEndEditing(_ textField: UITextField) {
         // mealNameLabel.text = textField.text
+        // 편집하는 동안은 세이브 버튼 비활성화
+        updateSaveButtonState()
+        navigationItem.title = textField.text
     }
     
     //MARK: UIImagePickerControllerDelegate
@@ -143,6 +180,12 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         // 픽커를 숨긴다.
         dismiss(animated: true, completion: nil)
     }
-    
+  
+    //MARK: Private Methods
+    private func updateSaveButtonState() {
+        // 텍스트필드가 비어있으면 세이브 버튼 비활성화
+        let text = nameTextField.text ?? ""
+        saveButton.isEnabled = !text.isEmpty
+    }
 }
 
