@@ -120,12 +120,11 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Save" id="xTq-bW-0iE">
                             <connections>
-                                <segue destination="J9l-zn-6nQ" kind="unwind" unwindAction="unwindToMealListWithSender:" id="vUP-Pz-eX0"/>
+                                <segue destination="J9l-zn-6nQ" kind="unwind" unwindAction="unwindToMealListWithSender:" id="7Dk-Te-N4Q"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="cancel" destination="3yE-ki-ciq" id="pDl-Pz-CcP"/>
                         <outlet property="nameTextField" destination="4BS-91-Bee" id="iho-yL-HkP"/>
                         <outlet property="photoImageView" destination="YmN-qb-Fft" id="iIo-Nh-M3A"/>
                         <outlet property="ratingControl" destination="DDo-Da-lcG" id="v6x-0e-17k"/>
